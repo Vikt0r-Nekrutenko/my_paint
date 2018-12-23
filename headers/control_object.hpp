@@ -1,6 +1,8 @@
 #ifndef CONTROL_OBJECT_HPP
 #define CONTROL_OBJECT_HPP
 
+#include "window.hpp"
+
 class ControlObject {
 	public:
 		ControlObject();

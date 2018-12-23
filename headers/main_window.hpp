@@ -5,9 +5,8 @@
 
 class MainWindow : public Window {
 	public:
-		w_event Closed;
-		w_event Command;
-		
+		Event ControlEvents;
+				
 		MainWindow(const wchar_t*, UINT, UINT, UINT, UINT);
 		virtual ~MainWindow();
 	private:
