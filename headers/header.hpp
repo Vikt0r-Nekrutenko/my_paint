@@ -7,4 +7,4 @@ enum WND_OBJ_TYPE {
 	wottNumEdit =	WS_CHILD | WS_BORDER | ES_NUMBER | WS_VISIBLE
 };
 
-#define w_event_call(who, what) (who->*what)(who)
+#define w_event_call(who, what, argc) (who->*what)(who,argc)

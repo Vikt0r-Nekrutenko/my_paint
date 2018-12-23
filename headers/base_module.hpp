@@ -10,6 +10,9 @@ class BaseModule
 		virtual ~BaseModule();
 		
 		void Show();
+		inline const HINSTANCE& GetInst()const{
+			return m_hInstance;
+		}
 	protected:
 		virtual LRESULT WndProc(HWND,UINT,WPARAM,LPARAM) = 0;
 		static LRESULT CALLBACK MainWndProc(HWND,UINT,WPARAM,LPARAM);

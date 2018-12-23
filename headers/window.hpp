@@ -5,7 +5,7 @@
 
 class Window;
 
-typedef void(Window::*w_event)(Window* sender);
+typedef void(Window::*w_event)(const Window* sender, const UINT argc);
 
 class Window : public BaseModule
 {
