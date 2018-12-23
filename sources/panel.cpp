@@ -5,13 +5,7 @@ Panel::Panel(const Window& Parent, UINT uPosX, UINT uPosY, UINT uWidth, UINT uHe
 {
 	m_wcClassName = L"PanelWindow";
 	RegClass();
-	m_hWnd = CreateWindowW(m_wcClassName, 
-							NULL, 
-							wotPanel, 
-							uPosX, 
-							uPosY, 
-							uWidth, 
-							uHeight, Parent.GetHWND(), NULL, m_hInstance, NULL);
+	m_hWnd = CreateWindowW(m_wcClassName, NULL, wotPanel, uPosX, uPosY, uWidth, uHeight, Parent.GetHWND(), NULL, m_hInstance, NULL);
 	SetWindowLongPtrW(m_hWnd, GWLP_USERDATA, (LONG_PTR)this);
 }
 

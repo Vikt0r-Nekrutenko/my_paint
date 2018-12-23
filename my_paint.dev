@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=4
 CompilerSettings=00000001f0111001001000000
-UnitCount=4
+UnitCount=10
 
 [VersionInfo]
 Major=0
@@ -73,7 +73,7 @@ BuildCmd=
 [Unit3]
 FileName=headers\base_module.hpp
 CompileCpp=1
-Folder=
+Folder=sources
 Compile=1
 Link=1
 Priority=1000
@@ -91,7 +91,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=sources\window_template.cpp
+FileName=sources\window.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -101,7 +101,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=headers\window.hpp
+FileName=headers\panel.hpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -111,9 +111,39 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=sources\window.cpp
+FileName=sources\panel.cpp
+CompileCpp=1
+Folder=headers
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=headers\window.hpp
 CompileCpp=1
 Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit9]
+FileName=headers\main_window.hpp
+CompileCpp=1
+Folder=headers
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=sources\main_window.cpp
+CompileCpp=1
+Folder=sources
 Compile=1
 Link=1
 Priority=1000

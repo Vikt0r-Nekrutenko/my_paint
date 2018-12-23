@@ -1,5 +1,5 @@
-#ifndef SOMETHING_H
-#define SOMETHING_H
+#ifndef PANEL_HPP
+#define PANEL_HPP
 
 #include "window.hpp"
 
