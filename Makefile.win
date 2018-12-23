@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o
-LINKOBJ  = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o
+OBJ      = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o
+LINKOBJ  = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -lgdi32 -lcomctl32 -lcomdlg32 -municode -m32 -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Users/vikt0/Documents/my_paint"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Users/vikt0/Documents/my_paint"
@@ -41,3 +41,6 @@ objects/main.o: sources/main.cpp
 
 objects/button.o: sources/button.cpp
 	$(CPP) -c sources/button.cpp -o objects/button.o $(CXXFLAGS)
+
+objects/control_object.o: sources/control_object.cpp
+	$(CPP) -c sources/control_object.cpp -o objects/control_object.o $(CXXFLAGS)

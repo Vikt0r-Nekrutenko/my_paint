@@ -2,21 +2,13 @@
 #define BUTTON_HPP
 
 #include "window.hpp"
+#include "control_object.hpp"
 
-class Button
+class Button : public ControlObject
 {
 	public:
-		Button();
 		Button(const Window&, const wchar_t*, UINT, UINT, UINT, UINT);
 		~Button();
-		
-		inline const UINT& GetID()const{
-			return m_ID;
-		}
-	private:
-		static UINT m_sID;
-		UINT m_ID;
-		HWND m_hWnd;
 };
 
 #endif

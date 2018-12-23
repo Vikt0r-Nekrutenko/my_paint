@@ -5,7 +5,8 @@
 class MyPaint : public MainWindow
 {
 	public:
-		Button *button1, *button2;
+		Button	*button1, 
+				*button2;
 		
 		MyPaint() :
 			MainWindow(L"MyPaint", 300, 300, 500, 400)
@@ -23,11 +24,12 @@ class MyPaint : public MainWindow
 		}
 		
 		void controlHandler(const Window* sender, const UINT argc){
-			switch(argc){
-				case 256:
-					std::cout << "qwe" << std::endl;
-					break;
-			}
+			if(*button1 == argc) 
+				std::cout << "qwe" << std::endl;
+			else if(*button2 == argc) 
+				std::cout << "asd" << std::endl;
+			else 
+				return;
 		}
 		void windowClosed(const Window* sender, const UINT argc){
 			std::cout << "closed" << std::endl;
