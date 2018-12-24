@@ -18,8 +18,8 @@ LRESULT MainWindow::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch(uMsg){
 		case WM_COMMAND:
-			ControlEvents.ControlCodeID.uID = wParam;
-			w_event_call_wide(this, ControlEvents);
+			ControlEvents.ControlCode.uID = wParam;
+			w_event_callw(this, ControlEvents);
 			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);

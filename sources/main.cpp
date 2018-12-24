@@ -11,6 +11,8 @@ class DrawPanel : public Panel
 		w_event MouseMove;
 		w_event Paint;
 		
+		Event Events;
+		
 		DrawPanel(const Window& Parent, UINT uPosX, UINT uPosY, UINT uWidth, UINT uHeight) :
 			Panel(Parent, uPosX, uPosY, uWidth, uHeight)
 		{
@@ -44,9 +46,11 @@ class DrawPanel : public Panel
 					break;
 				
 				case WM_MOUSEMOVE:
-					if(!MouseMove) break;
-					
-					w_event_call(this, MouseMove, 0);
+					//if(!MouseMove) break;
+					Events.MousePosition.uX = LOWORD(lParam);
+					Events.MousePosition.uY = HIWORD(lParam);
+					//w_event_call(this, MouseMove, 0);
+					w_event_callw(this, Events);
 					break;
 				
 				case WM_PAINT:
@@ -83,15 +87,13 @@ class MyPaint : public MainWindow
 			button1 = new Button(*this, L"button1", 10, 10, 100, 30);
 			button2 = new Button(*this, L"button2", 110, 10, 100, 30);
 			canvas 	= new DrawPanel(*this, 10, 40, 465, 340);
+
+			ControlEvents = (EventFunc)&MyPaint::controlHandler;
 			
-//			Command = (w_event)&MyPaint::controlHandler;
-//			Closed 	= (w_event)&MyPaint::windowClosed;
-//			ControlEvents.EventHandler = (Event::EventFunc)&MyPaint::controlHandler;
-			ControlEvents = (Event::EventFunc)&MyPaint::controlHandler;			
 			canvas->MouseLBtnDown = (w_event)&MyPaint::lBtnDown;
 			canvas->MouseLBtnUp	  = (w_event)&MyPaint::lBtnUp;
-			canvas->MouseMove	  = (w_event)&MyPaint::Move;
-			
+			//canvas->MouseMove	  = (w_event)&MyPaint::Move;
+			canvas->Events 		  = (EventFunc)&MyPaint::Move;
 		}
 		~MyPaint()
 		{
@@ -100,12 +102,12 @@ class MyPaint : public MainWindow
 			delete button1;
 		}
 		
-		void controlHandler(const Window* sender, const Event* params){
-			if(*button1 == params->ControlCodeID.uID) 
+		void controlHandler(Event* params){
+			if(*button1 == params->ControlCode) 
 				std::cout << "qwe" << std::endl;
-			else if(*button2 == params->ControlCodeID.uID) 
-				std::cout << "asd" << std::endl;
-			else 
+//			else if(*button2 == params->ControlCodeID.uID) 
+//				std::cout << "asd" << std::endl;
+			//else 
 				return;
 		}
 		void windowClosed(const Window* sender, const UINT argc){
@@ -117,8 +119,8 @@ class MyPaint : public MainWindow
 		void lBtnUp(const Window* sender, const UINT argc){
 			std::cout << "lbtnup" << std::endl;
 		}
-		void Move(const Window* sender, const UINT argc){
-			std::cout << "move" << std::endl;
+		void Move(Event* params){
+			std::cout << params->MousePosition.uX << ":" << params->MousePosition.uY << std::endl;
 		}
 };
 

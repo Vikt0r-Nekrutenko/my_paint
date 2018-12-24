@@ -11,8 +11,8 @@ class ControlObject {
 		inline const UINT& GetID()const{
 			return m_ID;
 		}
-		inline bool operator==(const UINT argc)const {
-			return m_ID == argc ? true : false;
+		inline bool operator==(const Event::ControlEvent argc)const {
+			return m_ID == argc.uID ? true : false;
 		}
 	protected:
 		static UINT m_sID;
