@@ -4,10 +4,6 @@
 #include "base_module.hpp"
 #include "event.hpp"
 
-class Window;
-
-typedef void(Window::*w_event)(const Window* sender, const UINT argc);
-
 class Window : public BaseModule
 {
 	public:
@@ -20,7 +16,7 @@ class Window : public BaseModule
 	protected:
 		HWND m_hWnd;
 		const wchar_t* m_wcClassName;
-		virtual void RegClass(); //default registred main window
+		virtual void RegClass();
 };
 
 #endif

@@ -1,3 +1,6 @@
+#ifndef HEADER_HPP
+#define HEADER_HPP
+
 #include <Windows.h>
 
 enum WND_OBJ_TYPE {	
@@ -7,4 +10,4 @@ enum WND_OBJ_TYPE {
 	wottNumEdit =	WS_CHILD | WS_BORDER | ES_NUMBER 		| WS_VISIBLE
 };
 
-#define w_event_call(who, what, argc) (who->*what)(who,argc)
+#endif

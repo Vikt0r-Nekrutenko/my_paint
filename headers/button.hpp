@@ -6,6 +6,7 @@
 class Button : public ControlObject
 {
 	public:
+		Button();
 		Button(const Window&, const wchar_t*, UINT, UINT, UINT, UINT);
 		~Button();
 };
