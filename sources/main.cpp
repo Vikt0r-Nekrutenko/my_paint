@@ -2,68 +2,67 @@
 #include "headers\main_window.hpp"
 #include "headers\button.hpp"
 #include "headers\panel.hpp"
-/*
+
 class DrawPanel : public Panel
 {
 	public:
-		w_event MouseLBtnDown;
-		w_event MouseLBtnUp;
-		w_event MouseMove;
-		w_event Paint;
-		
-		Event DrawPanelEvents;
+		Event MouseL_Down;
+		Event MouseL_Up;
+		Event MouseMove;
+		Event Draw;
 		
 		DrawPanel(const Window& Parent, UINT uPosX, UINT uPosY, UINT uWidth, UINT uHeight) :
-			Panel(Parent, uPosX, uPosY, uWidth, uHeight)
-		{
-			MouseLBtnDown = NULL;
-			MouseLBtnUp	= NULL;
-			MouseMove = NULL;
-			Paint = NULL;
+			Panel(Parent, uPosX, uPosY, uWidth, uHeight) {
+			
 		}
-		
-		~DrawPanel()
-		{
+		~DrawPanel() {
 			
 		}
 	private:
+		bool onDraw;
 		PAINTSTRUCT m_ps;
+
 		LRESULT WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(uMsg)
 			{
-				//if event handler for ptr isn't exist operation will be break
 				case WM_LBUTTONDOWN:
-					if(!MouseLBtnDown) break;
+					onDraw = true;
 					
-					w_event_call(this, MouseLBtnDown, 0);
+					MouseL_Down.MousePosition.uX = LOWORD(lParam);
+					MouseL_Down.MousePosition.uY = HIWORD(lParam);
+
+					MouseL_Down.CallEvent(this);
+					
 					break;
-				
+					
 				case WM_LBUTTONUP:
-					if(!MouseLBtnUp) break;
+					onDraw = false;
 					
-					w_event_call(this, MouseLBtnUp, 0);					
+					MouseL_Up.MousePosition.uX = LOWORD(lParam);
+					MouseL_Up.MousePosition.uY = HIWORD(lParam);
+
+					MouseL_Up.CallEvent(this);
+					
 					break;
-				
-				case WM_MOUSEMOVE:
-					//if(!MouseMove) break;
-					DrawPanelEvents.MousePosition.uX = LOWORD(lParam);
-					DrawPanelEvents.MousePosition.uY = HIWORD(lParam);
-					//w_event_call(this, MouseMove, 0);
-					//w_event_callw(this, DrawPanelEvents);
-					if(!DrawPanelEvents.CallEvent(this)){
-						std::cout << -1;
-					}
+					
+				case WM_MOUSEMOVE:				
+					MouseMove.MousePosition.uX = LOWORD(lParam);
+					MouseMove.MousePosition.uY = HIWORD(lParam);
+
+					//MouseMove.CallEvent(this);
+
+					InvalidateRect(hWnd, NULL, true);
 					break;
 				
 				case WM_PAINT:
 				{
-					if(!Paint) break;
+					if(!onDraw) break;
+					HDC hdc = BeginPaint(hWnd, &m_ps);					
 					
-					HDC hdc = BeginPaint(hWnd, &m_ps);
+					Draw.DraW.hDC = hdc;
+					Draw.CallEvent(this);
 					
-					w_event_call(this, Paint, 0);
-				
 					EndPaint(hWnd, &m_ps);
 					break;
 				}
@@ -75,7 +74,7 @@ class DrawPanel : public Panel
 			return DefWindowProcW(hWnd, uMsg, wParam, lParam);
 		}
 };
-*/
+
 
 class MyPaint : public MainWindow
 {
@@ -83,40 +82,56 @@ class MyPaint : public MainWindow
 		
 		Button		*button1, 
 					*button2;
-		//DrawPanel	*canvas;
+		DrawPanel	*canvas;
 		
 		MyPaint() :
 			MainWindow(L"MyPaint", 300, 300, 500, 400)
 		{
 			button1 = new Button(*this, L"button1", 10, 10, 100, 30);
 			button2 = new Button(*this, L"button2", 110, 10, 100, 30);
+			canvas 	= new DrawPanel(*this, 10, 50, 465, 300);
 			
-			ControlsEvents = to_event_handler(MyPaint, eventHandlerOfControls);
+			AddNewControl(button1);
+			button1->ControlEvent = to_event_handler(MyPaint, btn1Click);
+			
+			AddNewControl(button2);
+			button2->ControlEvent = to_event_handler(MyPaint, btn2Click);
+			
+			canvas->MouseL_Down = to_event_handler(MyPaint, beginPaint);
+			canvas->MouseL_Up 	= to_event_handler(MyPaint, endPaint);
+			canvas->MouseMove 	= to_event_handler(MyPaint, Move);
+			canvas->Draw		= to_event_handler(MyPaint, draw);
 		}
 		~MyPaint()
 		{
-			//delete canvas;
+			delete canvas;
 			delete button2;
 			delete button1;
 		}
 		
-		void eventHandlerOfControls(Event* params){
-			if(*button1 == *params){
-				button1Click();
-			}
-			else if(*button2 == *params){
-				button2Click();
-			}
+		void btn1Click(Event* ev){
+			std::cout << ev->ControlCode.uID << std::endl;
 		}
 		
-		void button1Click()
-		{
-			std::cout << "clicked1!" << std::endl;
+		void btn2Click(){
+			std::cout << "qwe2" << std::endl;
 		}
 		
-		void button2Click()
-		{
-			std::cout << "clicked2!" << std::endl;
+		void beginPaint(){
+			std::cout << "begin" << std::endl;
+		}
+		
+		void endPaint(){
+			std::cout << "end" << std::endl;
+		}
+		
+		void draw(Event* params){
+			Rectangle(params->DraW.hDC, 10, 10, 110, 110);
+			//std::cout << params->MousePosition.uX << ":"<< params->MousePosition.uY << std::endl;
+		}
+		
+		void Move(Event* params){
+			std::cout << params->MousePosition.uX << ":"<< params->MousePosition.uY << std::endl;
 		}
 };
 

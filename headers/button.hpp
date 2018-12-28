@@ -1,6 +1,7 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
+#include "window.hpp"
 #include "control_object.hpp"
 
 class Button : public ControlObject

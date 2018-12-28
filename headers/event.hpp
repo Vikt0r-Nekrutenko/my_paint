@@ -61,7 +61,11 @@ class Event
 			unsigned int uID;
 		};
 		
-
+		struct DrawEvent
+		{
+			HDC hDC;
+		};
+				
 		Event();
 		~Event();
 			
@@ -69,6 +73,7 @@ class Event
 		{
 			MouseMoveEvent MousePosition;
 			ControlEvent   ControlCode;
+			DrawEvent	   DraW;
 		};
 		
 		inline void operator=(EventType some_event_func){

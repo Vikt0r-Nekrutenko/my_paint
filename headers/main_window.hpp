@@ -5,8 +5,6 @@
 
 class MainWindow : public Window {
 	public:
-		Event ControlsEvents; //push button, etc.
-				
 		MainWindow(const wchar_t*, UINT, UINT, UINT, UINT);
 		virtual ~MainWindow();
 	private:

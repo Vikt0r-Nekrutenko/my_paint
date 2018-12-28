@@ -1,19 +1,20 @@
 #ifndef CONTROL_OBJECT_HPP
 #define CONTROL_OBJECT_HPP
 
-#include <iostream>
-#include "window.hpp"
+#include "event.hpp"
 
 class ControlObject {
 	public:
+		Event ControlEvent;
+		
 		ControlObject();
 		virtual ~ControlObject();
 		
 		inline const UINT& GetID()const{
 			return m_ID;
 		}
-		inline bool operator==(const Event& params)const {
-			return m_ID == params.ControlCode.uID ? true : false;
+		inline bool operator==(const WPARAM id)const {
+			return m_ID == id ? true : false;
 		}
 	protected:
 		static UINT m_sID;

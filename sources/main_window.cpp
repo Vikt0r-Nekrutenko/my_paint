@@ -18,8 +18,12 @@ LRESULT MainWindow::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch(uMsg){
 		case WM_COMMAND:
-			ControlsEvents.ControlCode.uID = wParam;
-			ControlsEvents.CallEvent(this);
+			for(int i = m_CacheControls.size()-1; i >= 0; --i){
+				if(*m_CacheControls[i] == wParam) { // if( control.ID == ID )
+					m_CacheControls[i]->ControlEvent.ControlCode.uID = wParam;
+					m_CacheControls[i]->ControlEvent.CallEvent(this);
+				}
+			}
 			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);
