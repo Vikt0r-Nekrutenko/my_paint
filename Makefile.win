@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o
-LINKOBJ  = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o
+OBJ      = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o objects/draw_panel.o objects/hidden_buffer.o objects/shape.o objects/pen.o
+LINKOBJ  = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o objects/draw_panel.o objects/hidden_buffer.o objects/shape.o objects/pen.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -lgdi32 -lcomctl32 -lcomdlg32 -municode -m32 -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Users/vikt0/Documents/my_paint"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Users/vikt0/Documents/my_paint"
@@ -47,3 +47,15 @@ objects/control_object.o: sources/control_object.cpp
 
 objects/event.o: sources/event.cpp
 	$(CPP) -c sources/event.cpp -o objects/event.o $(CXXFLAGS)
+
+objects/draw_panel.o: sources/draw_panel.cpp
+	$(CPP) -c sources/draw_panel.cpp -o objects/draw_panel.o $(CXXFLAGS)
+
+objects/hidden_buffer.o: sources/hidden_buffer.cpp
+	$(CPP) -c sources/hidden_buffer.cpp -o objects/hidden_buffer.o $(CXXFLAGS)
+
+objects/shape.o: sources/shape.cpp
+	$(CPP) -c sources/shape.cpp -o objects/shape.o $(CXXFLAGS)
+
+objects/pen.o: sources/pen.cpp
+	$(CPP) -c sources/pen.cpp -o objects/pen.o $(CXXFLAGS)

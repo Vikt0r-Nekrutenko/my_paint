@@ -1,6 +1,7 @@
 #ifndef HEADER_HPP
 #define HEADER_HPP
 
+#include <iostream>
 #include <Windows.h>
 
 enum WND_OBJ_TYPE {	

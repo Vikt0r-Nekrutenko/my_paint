@@ -1,80 +1,6 @@
-#include <iostream>
 #include "headers\main_window.hpp"
 #include "headers\button.hpp"
-#include "headers\panel.hpp"
-
-class DrawPanel : public Panel
-{
-	public:
-		Event MouseL_Down;
-		Event MouseL_Up;
-		Event MouseMove;
-		Event Draw;
-		
-		DrawPanel(const Window& Parent, UINT uPosX, UINT uPosY, UINT uWidth, UINT uHeight) :
-			Panel(Parent, uPosX, uPosY, uWidth, uHeight) {
-			
-		}
-		~DrawPanel() {
-			
-		}
-	private:
-		bool onDraw;
-		PAINTSTRUCT m_ps;
-
-		LRESULT WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-		{
-			switch(uMsg)
-			{
-				case WM_LBUTTONDOWN:
-					onDraw = true;
-					
-					MouseL_Down.MousePosition.uX = LOWORD(lParam);
-					MouseL_Down.MousePosition.uY = HIWORD(lParam);
-
-					MouseL_Down.CallEvent(this);
-					
-					break;
-					
-				case WM_LBUTTONUP:
-					onDraw = false;
-					
-					MouseL_Up.MousePosition.uX = LOWORD(lParam);
-					MouseL_Up.MousePosition.uY = HIWORD(lParam);
-
-					MouseL_Up.CallEvent(this);
-					
-					break;
-					
-				case WM_MOUSEMOVE:				
-					MouseMove.MousePosition.uX = LOWORD(lParam);
-					MouseMove.MousePosition.uY = HIWORD(lParam);
-
-					//MouseMove.CallEvent(this);
-
-					InvalidateRect(hWnd, NULL, true);
-					break;
-				
-				case WM_PAINT:
-				{
-					if(!onDraw) break;
-					HDC hdc = BeginPaint(hWnd, &m_ps);					
-					
-					Draw.DraW.hDC = hdc;
-					Draw.CallEvent(this);
-					
-					EndPaint(hWnd, &m_ps);
-					break;
-				}
-				
-				case WM_DESTROY:
-					PostQuitMessage(0);
-					break;
-			}
-			return DefWindowProcW(hWnd, uMsg, wParam, lParam);
-		}
-};
-
+#include "headers\draw_panel.hpp"
 
 class MyPaint : public MainWindow
 {
@@ -83,6 +9,9 @@ class MyPaint : public MainWindow
 		Button		*button1, 
 					*button2;
 		DrawPanel	*canvas;
+		
+		UINT m_StartPosX, m_StartPosY,
+			 m_EndPosX,   m_EndPosY;
 		
 		MyPaint() :
 			MainWindow(L"MyPaint", 300, 300, 500, 400)
@@ -126,7 +55,8 @@ class MyPaint : public MainWindow
 		}
 		
 		void draw(Event* params){
-			Rectangle(params->DraW.hDC, 10, 10, 110, 110);
+			
+			Rectangle(params->DrawOnDC.hDC, 10, 10, 110, 110);
 			//std::cout << params->MousePosition.uX << ":"<< params->MousePosition.uY << std::endl;
 		}
 		

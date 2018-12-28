@@ -73,7 +73,7 @@ class Event
 		{
 			MouseMoveEvent MousePosition;
 			ControlEvent   ControlCode;
-			DrawEvent	   DraW;
+			DrawEvent	   DrawOnDC;
 		};
 		
 		inline void operator=(EventType some_event_func){
