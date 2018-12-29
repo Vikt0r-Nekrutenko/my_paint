@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o objects/draw_panel.o objects/hidden_buffer.o objects/shape.o objects/pen.o
-LINKOBJ  = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o objects/draw_panel.o objects/hidden_buffer.o objects/shape.o objects/pen.o
+OBJ      = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o objects/draw_panel.o objects/hidden_buffer.o objects/d_shape.o objects/pen.o objects/d_rectangle.o objects/d_line.o objects/d_ellipse.o objects/color_dialog.o objects/d_triangle.o
+LINKOBJ  = objects/base_module.o objects/window.o objects/panel.o objects/main_window.o objects/main.o objects/button.o objects/control_object.o objects/event.o objects/draw_panel.o objects/hidden_buffer.o objects/d_shape.o objects/pen.o objects/d_rectangle.o objects/d_line.o objects/d_ellipse.o objects/color_dialog.o objects/d_triangle.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -lgdi32 -lcomctl32 -lcomdlg32 -municode -m32 -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Users/vikt0/Documents/my_paint"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Users/vikt0/Documents/my_paint"
@@ -54,8 +54,23 @@ objects/draw_panel.o: sources/draw_panel.cpp
 objects/hidden_buffer.o: sources/hidden_buffer.cpp
 	$(CPP) -c sources/hidden_buffer.cpp -o objects/hidden_buffer.o $(CXXFLAGS)
 
-objects/shape.o: sources/shape.cpp
-	$(CPP) -c sources/shape.cpp -o objects/shape.o $(CXXFLAGS)
+objects/d_shape.o: sources/d_shape.cpp
+	$(CPP) -c sources/d_shape.cpp -o objects/d_shape.o $(CXXFLAGS)
 
 objects/pen.o: sources/pen.cpp
 	$(CPP) -c sources/pen.cpp -o objects/pen.o $(CXXFLAGS)
+
+objects/d_rectangle.o: sources/d_rectangle.cpp
+	$(CPP) -c sources/d_rectangle.cpp -o objects/d_rectangle.o $(CXXFLAGS)
+
+objects/d_line.o: sources/d_line.cpp
+	$(CPP) -c sources/d_line.cpp -o objects/d_line.o $(CXXFLAGS)
+
+objects/d_ellipse.o: sources/d_ellipse.cpp
+	$(CPP) -c sources/d_ellipse.cpp -o objects/d_ellipse.o $(CXXFLAGS)
+
+objects/color_dialog.o: sources/color_dialog.cpp
+	$(CPP) -c sources/color_dialog.cpp -o objects/color_dialog.o $(CXXFLAGS)
+
+objects/d_triangle.o: sources/d_triangle.cpp
+	$(CPP) -c sources/d_triangle.cpp -o objects/d_triangle.o $(CXXFLAGS)

@@ -3,10 +3,13 @@
 Pen::Pen() :
 	m_hPen(NULL), m_uSize(1), m_Color(RGB(0,0,0)) 
 {
-	if (m_hPen != NULL){
-		DeleteObject(m_hPen);
-	}
-	m_hPen = CreatePen(PS_SOLID, m_uSize, m_Color);
+	RecreatePen();
+}
+
+Pen::Pen(const UINT uSize, const COLORREF Color) :
+	m_hPen(NULL), m_uSize(uSize), m_Color(Color)
+{
+	RecreatePen();
 }
 
 Pen::~Pen()

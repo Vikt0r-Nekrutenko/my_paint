@@ -7,7 +7,7 @@ class Window;
 
 class Event;
 
-typedef void(Window::*EventType)(Event*); // type for event handler pointer
+typedef void(Window::*EventType)(Window*, Event*); // type for event handler pointer
 #define to_event_handler(who, what) (EventType)&who::what
 
 //for pointer init use next cast:
@@ -48,32 +48,25 @@ class Event
 {
 	private:
 		EventType EventHandler;
-
 	public:		
 		struct MouseMoveEvent
 		{
-			unsigned int uX;
-			unsigned int uY;
+			int uX;
+			int uY;
 		};
 		
 		struct ControlEvent
 		{
-			unsigned int uID;
+			int uID;
 		};
-		
-		struct DrawEvent
-		{
-			HDC hDC;
-		};
-				
+			
 		Event();
 		~Event();
-			
+		
 		union
 		{
 			MouseMoveEvent MousePosition;
 			ControlEvent   ControlCode;
-			DrawEvent	   DrawOnDC;
 		};
 		
 		inline void operator=(EventType some_event_func){

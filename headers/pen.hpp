@@ -7,6 +7,7 @@ class Pen
 {
 	public:
 		Pen();
+		Pen(const UINT uSize, const COLORREF Color);
 		~Pen();
 		void SetPen(const Pen&);
 		void SetColor(const COLORREF);
@@ -14,6 +15,7 @@ class Pen
 		
 		inline HPEN GetPen()const { return m_hPen; }
 		inline UINT GetSize()const { return m_uSize; }
+		inline COLORREF GetColor()const { return m_Color; }
 	private:
 		inline void RecreatePen(){
 			if (m_hPen != NULL){

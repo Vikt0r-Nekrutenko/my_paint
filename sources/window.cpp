@@ -28,7 +28,6 @@ void Window::RegClass(){
 	wcw.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	wcw.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wcw.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wcw.style = CS_HREDRAW | CS_VREDRAW;
 
 	RegisterClassW(&wcw);
 }

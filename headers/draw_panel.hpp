@@ -4,7 +4,7 @@
 #include <utility>
 #include "hidden_buffer.hpp"
 #include "panel.hpp"
-#include "shape.hpp"
+#include "d_shape.hpp"
 #include "pen.hpp"
 
 using std::vector;
@@ -13,17 +13,27 @@ using std::make_pair;
 
 class DrawPanel : public Panel {
 	public:
+		Event DrawShape;
+		
 		DrawPanel(const Window&, UINT, UINT, UINT, UINT);
 		~DrawPanel();
+
+		void AddNewShape(dShape*);
 		
-		Event MouseL_Down;
-		Event MouseL_Up;
-		Event MouseMove;
-		Event Draw;
+		inline void ChangeColor(COLORREF color) {
+			m_Pen.SetColor(color);
+		}
+		inline void ChangeSize(UINT uSize){
+			m_Pen.SetSize(m_Pen.GetSize() + uSize);
+		}
 	private:
 		bool OnDraw;
+		int MousePositionX, MousePositionY;
+		int StartPositionX, StartPositionY;
+		
+		Pen m_Pen;
 		PAINTSTRUCT m_ps;
-		vector<	pair<Shape*, Pen*> > m_ShapesCache;
+		vector<	pair<dShape*, Pen*> > m_ShapesCache;
 		LRESULT WndProc(HWND, UINT, WPARAM, LPARAM);
 };
 

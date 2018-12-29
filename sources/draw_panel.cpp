@@ -7,7 +7,15 @@ DrawPanel::DrawPanel(const Window& Parent, UINT uPosX, UINT uPosY, UINT uWidth, 
 }
 DrawPanel::~DrawPanel() 
 {
-	
+	for (int i = m_ShapesCache.size() - 1; i >= 0; --i) {
+		delete m_ShapesCache[i].first;
+		delete m_ShapesCache[i].second;
+	}
+}
+
+void DrawPanel::AddNewShape(dShape* shape)
+{
+	m_ShapesCache.push_back(make_pair(shape, new Pen(m_Pen.GetSize(), m_Pen.GetColor())));
 }
 
 LRESULT DrawPanel::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -16,35 +24,44 @@ LRESULT DrawPanel::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		case WM_LBUTTONDOWN:
 			OnDraw = true;
+			DrawShape.CallEvent(this);	
 			
-			MouseL_Down.MousePosition.uX = LOWORD(lParam);
-			MouseL_Down.MousePosition.uY = HIWORD(lParam);
-
-			MouseL_Down.CallEvent(this);
+			StartPositionX = MousePositionX;
+			StartPositionY = MousePositionY;
 			
 			break;
 			
 		case WM_LBUTTONUP:
 			OnDraw = false;
 			
-			MouseL_Up.MousePosition.uX = LOWORD(lParam);
-			MouseL_Up.MousePosition.uY = HIWORD(lParam);
+			if (!m_ShapesCache.empty() && m_ShapesCache.back().first->IsBad()){
+				delete m_ShapesCache.back().first;
+				delete m_ShapesCache.back().second;
+				m_ShapesCache.pop_back();
+			}
 
-			std::cout << m_ShapesCache.size() << std::endl;
-
-			MouseL_Up.CallEvent(this);
-			
+			std::cout << "cache size: " << m_ShapesCache.size() << std::endl;
 			break;
 			
-		case WM_MOUSEMOVE:				
-			MouseMove.MousePosition.uX = LOWORD(lParam);
-			MouseMove.MousePosition.uY = HIWORD(lParam);
-
-			//MouseMove.CallEvent(this);
-
+		case WM_MOUSEMOVE:
+			MousePositionX = LOWORD(lParam);
+			MousePositionY = HIWORD(lParam);
+			
+			if(!m_ShapesCache.empty() && OnDraw)
+				m_ShapesCache.back().first->SetSize(StartPositionX, StartPositionY, MousePositionX, MousePositionY);
+			
 			InvalidateRect(hWnd, NULL, false);
 			break;
-		
+			
+		case WM_RBUTTONUP:
+			for (int i = m_ShapesCache.size() - 1; i >= 0; --i) {
+				delete m_ShapesCache[i].first;
+				delete m_ShapesCache[i].second;
+				m_ShapesCache.pop_back();
+			}
+			InvalidateRect(hWnd, NULL, true);
+			break;
+			
 		case WM_PAINT:
 		{
 			if(!OnDraw) break;
@@ -55,18 +72,15 @@ LRESULT DrawPanel::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 			if (!m_ShapesCache.empty()) 
 			{
-				for(int i = m_ShapesCache.size() - 1; i >= 0; --i) {
+				for(UINT i = 0; i < m_ShapesCache.size(); ++i) {
 					SelectObject(buffer.Get(), m_ShapesCache[i].second->GetPen());
 					m_ShapesCache[i].first->DrawShape(buffer.Get());
 				}
 				
-				Draw.DrawOnDC.hDC = hdc;
-				Draw.CallEvent(this);
-				
-				//SelectObject(hb.Get(), pen.getPen());
-				//cache.back().first->Draw(hb.Get(), StartPositionX, StartPositionY, MousePositionX, MousePositionY);
-			}
-			
+				SelectObject(buffer.Get(), m_Pen.GetPen());
+				m_ShapesCache.back().first->DrawShape(buffer.Get());
+			}				
+
 			buffer.Show(hdc);
 			
 			EndPaint(hWnd, &m_ps);

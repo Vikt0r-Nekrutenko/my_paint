@@ -1,67 +1,109 @@
 #include "headers\main_window.hpp"
 #include "headers\button.hpp"
 #include "headers\draw_panel.hpp"
+#include "headers\color_dialog.hpp"
+#include "headers\d_rectangle.hpp"
+#include "headers\d_ellipse.hpp"
+#include "headers\d_line.hpp"
+#include "headers\d_triangle.hpp"
 
 class MyPaint : public MainWindow
 {
 	public:
 		
-		Button		*button1, 
-					*button2;
+		Button		*buttonRect, 
+					*buttonEllipse,
+					*buttonLine,
+					*buttonTriangle,
+					*buttonColorDialog,
+					*buttonPlus,
+					*buttonMinus;
 		DrawPanel	*canvas;
-		
-		UINT m_StartPosX, m_StartPosY,
-			 m_EndPosX,   m_EndPosY;
-		
+			
 		MyPaint() :
-			MainWindow(L"MyPaint", 300, 300, 500, 400)
+			MainWindow(L"MyPaint", 300, 300, 600, 400)
 		{
-			button1 = new Button(*this, L"button1", 10, 10, 100, 30);
-			button2 = new Button(*this, L"button2", 110, 10, 100, 30);
-			canvas 	= new DrawPanel(*this, 10, 50, 465, 300);
+			buttonRect			= new Button(*this, L"Rectangle", 10, 10, 100, 30);
+			buttonEllipse 		= new Button(*this, L"Ellipse", 110, 10, 100, 30);
+			buttonLine 			= new Button(*this, L"Line", 210, 10, 100, 30);
+			buttonTriangle 		= new Button(*this, L"Triangle", 310, 10, 100, 30);
+			buttonColorDialog 	= new Button(*this, L"Color", 410, 10, 100, 30);
+			buttonPlus 			= new Button(*this, L"+", 510, 10, 30, 30);
+			buttonMinus 		= new Button(*this, L"-", 540, 10, 30, 30);
+			canvas 				= new DrawPanel(*this, 10, 50, 565, 300);
 			
-			AddNewControl(button1);
-			button1->ControlEvent = to_event_handler(MyPaint, btn1Click);
+			AddNewControl(buttonRect);
+			AddNewControl(buttonEllipse);
+			AddNewControl(buttonLine);
+			AddNewControl(buttonTriangle);
+			AddNewControl(buttonColorDialog);
+			AddNewControl(buttonPlus);
+			AddNewControl(buttonMinus);
 			
-			AddNewControl(button2);
-			button2->ControlEvent = to_event_handler(MyPaint, btn2Click);
-			
-			canvas->MouseL_Down = to_event_handler(MyPaint, beginPaint);
-			canvas->MouseL_Up 	= to_event_handler(MyPaint, endPaint);
-			canvas->MouseMove 	= to_event_handler(MyPaint, Move);
-			canvas->Draw		= to_event_handler(MyPaint, draw);
+			buttonRect->ControlEvent 		= to_event_handler(MyPaint, buttonRectClick);
+			buttonEllipse->ControlEvent 	= to_event_handler(MyPaint, buttonEllipseClick);
+			buttonLine->ControlEvent 		= to_event_handler(MyPaint, buttonLineClick);
+			buttonTriangle->ControlEvent 	= to_event_handler(MyPaint, buttonTriangleClick);
+			buttonColorDialog->ControlEvent = to_event_handler(MyPaint, buttonColorDialogClick);
+			buttonPlus->ControlEvent 		= to_event_handler(MyPaint, buttonPlusClick);
+			buttonMinus->ControlEvent 		= to_event_handler(MyPaint, buttonMinusClick);
 		}
+		
 		~MyPaint()
 		{
 			delete canvas;
-			delete button2;
-			delete button1;
+			delete buttonMinus;
+			delete buttonPlus;
+			delete buttonColorDialog;
+			delete buttonTriangle;
+			delete buttonLine;
+			delete buttonEllipse;
+			delete buttonRect;
+		}
+	
+		void buttonRectClick(){
+			canvas->DrawShape = (EventType)&MyPaint::DrawRect;
 		}
 		
-		void btn1Click(Event* ev){
-			std::cout << ev->ControlCode.uID << std::endl;
+		void buttonEllipseClick(){
+			canvas->DrawShape = (EventType)&MyPaint::DrawEllipse;
+		}
+
+		void buttonLineClick(){
+			canvas->DrawShape = (EventType)&MyPaint::DrawLine;
 		}
 		
-		void btn2Click(){
-			std::cout << "qwe2" << std::endl;
+		void buttonTriangleClick(){
+			canvas->DrawShape = (EventType)&MyPaint::DrawTriangle;
+		}
+				
+		void buttonColorDialogClick(){
+			ColorDialog cd(m_hWnd);
+			canvas->ChangeColor(cd.SelectColor());
 		}
 		
-		void beginPaint(){
-			std::cout << "begin" << std::endl;
+		void buttonPlusClick(){
+			canvas->ChangeSize(1);
 		}
 		
-		void endPaint(){
-			std::cout << "end" << std::endl;
+		void buttonMinusClick(){
+			canvas->ChangeSize(-1);
 		}
 		
-		void draw(Event* params){
-			
-			Rectangle(params->DrawOnDC.hDC, 10, 10, 110, 110);
-			//std::cout << params->MousePosition.uX << ":"<< params->MousePosition.uY << std::endl;
+		void DrawRect(DrawPanel* sender){
+			sender->AddNewShape(new dRectangle);
 		}
 		
-		void Move(Event* params){
-			std::cout << params->MousePosition.uX << ":"<< params->MousePosition.uY << std::endl;
+		void DrawEllipse(DrawPanel* sender){
+			sender->AddNewShape(new dEllipse);
+		}
+		
+		void DrawLine(DrawPanel* sender){
+			sender->AddNewShape(new dLine);
+		}
+		
+		void DrawTriangle(DrawPanel* sender){
+			sender->AddNewShape(new dTriangle);
 		}
 };
 
@@ -69,5 +111,6 @@ int wmain()
 {
 	MyPaint mp1;
 	mp1.Show();
+
 	return 0;
 }
