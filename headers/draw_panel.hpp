@@ -20,14 +20,15 @@ class DrawPanel : public Panel {
 
 		void AddNewShape(dShape*);
 		
-		inline void ChangeColor(COLORREF color) {
-			m_Pen.SetColor(color);
+		inline void ChangeColor(const COLORREF Color) {
+			m_Pen.SetColor(Color);
 		}
-		inline void ChangeSize(UINT uSize){
+		inline void ChangeSize(const UINT uSize){
 			m_Pen.SetSize(m_Pen.GetSize() + uSize);
 		}
 	private:
 		bool OnDraw;
+		
 		int MousePositionX, MousePositionY;
 		int StartPositionX, StartPositionY;
 		

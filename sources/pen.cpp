@@ -30,10 +30,3 @@ void Pen::SetSize(const UINT uSize)
 	m_uSize = uSize < 1 ? 1 : uSize;
 	RecreatePen();
 }
-
-void Pen::SetPen(const Pen& pPen)
-{
-	m_Color = pPen.m_Color;
-	m_uSize = pPen.m_uSize;
-	RecreatePen();
-}

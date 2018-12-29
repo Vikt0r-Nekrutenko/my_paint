@@ -12,9 +12,9 @@ private:
 public:
 	HiddenBuffer(const HWND&, const HDC&);
 	~HiddenBuffer();
-	inline void Fill(COLORREF color)
-	{
-		HBRUSH hbrBkGnd = CreateSolidBrush(color);
+	
+	inline void Fill(COLORREF Color) {
+		HBRUSH hbrBkGnd = CreateSolidBrush(Color);
 		FillRect(m_memoryDC, &m_clientRec, hbrBkGnd);
 		DeleteObject(hbrBkGnd);
 	}

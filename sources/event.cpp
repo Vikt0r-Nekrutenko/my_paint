@@ -3,10 +3,12 @@
 Event::Event() :
 	EventHandler(NULL)
 {
+	
 }
 
 Event::~Event()
 {
+	
 }
 
 bool Event::CallEvent(Window* sender){

@@ -5,7 +5,7 @@
 
 class ControlObject {
 	public:
-		Event ControlEvent;
+		Event ControlEvent; // click-click
 		
 		ControlObject();
 		virtual ~ControlObject();
@@ -13,11 +13,11 @@ class ControlObject {
 		inline const UINT& GetID()const{
 			return m_ID;
 		}
-		inline bool operator==(const WPARAM id)const {
+		inline bool operator==(const WPARAM& id)const {
 			return m_ID == id ? true : false;
 		}
 	protected:
-		static UINT m_sID;
+		static UINT m_sID; // counter of controls
 		UINT m_ID;
 		HWND m_hWnd;
 };
